@@ -27,13 +27,13 @@ window.WaitForClose(); // Starts the application event loop
 Example router:
 
 ```cs
-public  class  ExampleRouter : Router {
+public class ExampleRouter : Router {
 
-	public  override  string  BasePath  =>  "/";
+	public override string BasePath  =>  "/";
 	
-	[Route(Path  =  "test", Async  =  true, Method  =  Method.GET)]
-	public  async  void  MyRoute(Req  req, Res  res) {
-		await  Task.Delay(500);
+	[Route(Path = "test", Async = true, Method = Method.GET)]
+	public async void MyRoute(Req req, Res  res) {
+		await Task.Delay(500);
 		res.Send("Example Router /test");
 	}
 }
@@ -41,8 +41,8 @@ public  class  ExampleRouter : Router {
 
 Calling from client side:
 ```js
-async  function  Test() {
-	const  res = await  R.MyRoute(params);
+async function Test() {
+	const res = await R.MyRoute(params);
 }
 ```
 
