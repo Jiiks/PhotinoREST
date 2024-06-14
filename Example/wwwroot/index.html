@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photino for .NET Demo</title>
+    <link rel="stylesheet" href="assets/main.css" />
+</head>
+<body class="flex flex-col">
+    <div class="flex" id="tabs">
+        <button id="btnTests" class="selected" onclick="selectTests()">Tests</button>
+        <button id="btnFileTree" onclick="selectFileTree()">File Tree Test</button>
+        <button id="btnMovieInfo" onclick="selectMovieInfo()">Movie Info</button>
+    </div>
+    <div class="flex flex-col flex-grow tab hidden" id="btnFileTreeTab">
+        <button onClick="ofd()">Choose Path...</button>
+        <textarea readonly="readonly" unselectable="on" class="flex-grow" id="filetree">/</textarea>
+    </div>
+    <div class="flex flex-col flex-grow tab hidden" id="btnMovieInfoTab">
+        <button onClick="ofid()">Choose File...</button>
+        <span id="movietitle"></span>
+        <div class="flex flex-grow">
+            <div style="width:185px" id="movieposter"></div>
+            <textarea readonly="readonly" unselectable="on" class="flex-grow" id="movieinfo">/</textarea>
+        </div>
+        <div class="flex flex-col movieabout">
+            <div id="movieGenres"></div>
+            <div id="movieDirector"></div>
+            <div id="movieWriters"></div>
+            <div id="movieStars"></div>
+            <div id="movieLinks"></div>
+        </div>
+        <button onclick="playMovie()">Play</button>
+    </div>
+    <div class="flex flex-col flex-grow tab" id="btnTestsTab">
+        <div class="top flex flex-col flex-grow">
+            <h1 class="text-center">PhotinoREST Example</h1>
+                <textarea readonly="readonly" unselectable="on" class="flex-grow" id="result">Results will appear here</textarea>
+        </div>
+        <!--Bindings are auto generated as R-->
+        <div class="buttons flex">
+            <button class="primary" onclick='bindingTest(R.Test, {foo: "bar"})'>Test path "/test"</button>
+            <button class="primary" onclick='bindingTest(R.TestTwo, {foo: "bar"})'>Test path "/two/test"</button>
+            <button class="primary" onclick='bindingTest(R.BadRequest, {foo: "bar"})'>Test path "/br"</button>
+        </div>
+    </div>
+    
+    <script src="app://dynamic.js"></script>
+    <script src="assets/photinorest.js" type="module"></script>
+
+    <script>
+        let curTab = "btnTests";
+
+        async function bindingTest(func, params) {
+            const res = await func(params);
+            document.getElementById('result').value = JSON.stringify(res, null, 4);
+        }
+
+        function setTab(tab) {
+            curTab = tab;
+            document.querySelectorAll('#tabs button').forEach(btn => btn.className = '')
+            document.getElementById(tab).className = 'selected';
+            document.querySelectorAll('.tab').forEach(tab => tab.className = 'flex flex-col flex-grow tab hidden');
+            document.getElementById(`${tab}Tab`).className = 'flex flex-col flex-grow tab';
+        }
+
+        function selectTests() {
+            if(curTab === "btnTests") return;
+            setTab("btnTests")
+            
+        }
+        function selectFileTree() {
+            if(curTab === "btnFileTree") return;
+            setTab("btnFileTree");
+        }
+
+        function selectMovieInfo() {
+            if(curTab === "btnMovieInfo") return;
+            setTab("btnMovieInfo");
+        }
+
+        async function ofd() {
+            const res = await R.GetFolder();
+            var fileTree = document.getElementById('filetree');
+            fileTree.value = "Loading...";
+            const { body } = res;
+            let text = `${body.root}\n`;
+            body.directories.forEach(dir => {
+                text += `${dir.substr(body.root.length)}\n`;
+            });
+            body.files.forEach(file => {
+                text += `${file.substr(body.root.length)}\n`;
+            });
+            fileTree.value = text;
+        }
+        var lastSelectedVideo = "";
+        async function ofid() {
+            const res = await PhotinoRest.GET("/movieinfo");
+            var movieinfo = document.getElementById('movieinfo');
+            const { body } = res;
+            document.getElementById('movietitle').innerText = body.name;
+            var poster = document.getElementById('movieposter');
+            poster.style = `width: 185px; background-size: cover; background-image: url(${body.image}); background-repeat: no-repeat; background-postion: center center;`;
+            movieinfo.value = body.overview;
+            lastSelectedVideo = body.filepath;
+            var about = JSON.parse(body.about);
+            console.log(about);
+            var { genres, director, writers, stars, rating } = about;
+            var { imdb, moviedb } = JSON.parse(body.links);
+
+            var movieGenres = document.getElementById('movieGenres');
+            movieGenres.innerText = genres + " - " + rating;
+            var movieDirector = document.getElementById('movieDirector');
+            movieDirector.innerText = `Director: ${director}`;
+            var movieWriters = document.getElementById('movieWriters');
+            movieWriters.innerText = `Writers: ${writers}`;
+            var movieStars = document.getElementById('movieStars');
+            movieStars.innerText = `Stars: ${stars}`;
+            var movieLinks = document.getElementById('movieLinks');
+            var imdbLink = Object.assign(document.createElement('a'), { target: "_blank", href: imdb, innerText: "imdb" });
+            var movieDbLink = Object.assign(document.createElement('a'), { target: "_blank", href: moviedb, innerText: "moviedb", style: "margin-left:10px;" });
+            movieLinks.innerHTML = "";
+            movieLinks.appendChild(imdbLink);
+            movieLinks.appendChild(movieDbLink);
+        }
+
+        async function playMovie() {
+            if(lastSelectedVideo === "") return;
+            await PhotinoRest.POST("/playmovie", { path: lastSelectedVideo });
+        }
+
+    </script>
+
+</body>
+</html>

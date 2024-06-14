@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotinoREST", "PhotinoREST\PhotinoREST.csproj", "{D112FCD8-E671-41EA-8DA4-38FC8D5D9273}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloPhotino.NET", "Example\HelloPhotino.NET.csproj", "{3FD965A0-C198-4907-B668-581C4EA3E664}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D112FCD8-E671-41EA-8DA4-38FC8D5D9273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D112FCD8-E671-41EA-8DA4-38FC8D5D9273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D112FCD8-E671-41EA-8DA4-38FC8D5D9273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D112FCD8-E671-41EA-8DA4-38FC8D5D9273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD965A0-C198-4907-B668-581C4EA3E664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD965A0-C198-4907-B668-581C4EA3E664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD965A0-C198-4907-B668-581C4EA3E664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD965A0-C198-4907-B668-581C4EA3E664}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
