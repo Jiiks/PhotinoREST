@@ -42,7 +42,7 @@ public class ExampleRouter : Router {
 Calling from client side:
 ```js
 async function Test() {
-	const res = await R.MyRoute({});
+    const res = await R.MyRoute({});
     console.log(res);
 }
 ```
