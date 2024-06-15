@@ -9,7 +9,15 @@
     <Company>Jiiks</Company>
     <PackageDescription>Super simple REST api with automatic binding generation for Photino.NET. https://www.tryphotino.io/</PackageDescription>
     <RepositoryUrl>https://github.com/Jiiks/PhotinoREST</RepositoryUrl>
+    <ProjectUrl>https://github.com/Jiiks/PhotinoREST</ProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>2024-Present Jiiks - https://github.com/Jiiks</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Photino.NET" Version="3.0.14" />

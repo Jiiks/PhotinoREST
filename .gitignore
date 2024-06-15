@@ -33,3 +33,4 @@ bld/
 
 # nuget
 nuget.config
+nuget_*
