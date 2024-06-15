@@ -42,9 +42,17 @@ public class ExampleRouter : Router {
 Calling from client side:
 ```js
 async function Test() {
-	const res = await R.MyRoute(params);
+	const res = await R.MyRoute({});
+    console.log(res);
 }
 ```
+
+Alternatively you can use it as a normal REST api without bindings
+```js
+async function Test() {
+    const res = await PhotinoRest.GET('/test', {});
+    console.log(res);
+}
 
 ```
 MIT License
